@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="AI Course Assistant">
+  <path fill="#0f6cbf" d="M12 1.8l1.8 6.4L20.2 10l-6.4 1.8L12 18.2l-1.8-6.4L3.8 10l6.4-1.8L12 1.8z"/>
+  <circle cx="18.5" cy="18.5" r="3.2" fill="#0f6cbf" opacity=".72"/>
+</svg>

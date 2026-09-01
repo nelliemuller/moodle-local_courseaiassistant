@@ -1,0 +1,31 @@
+AI Course Assistant 2.1.0
+
+* Provides course-aware guidance using Google Gemini or OpenAI.
+* Supports Moodle 5.0 through 5.2.
+* Offers top-right, bottom-right, bottom-center, bottom-left, course-header, and static full-page placements.
+* Keeps non-static chats on the Moodle course page without narrowing or moving course content.
+* Lets users make the in-page chat movable and drag it anywhere within the visible browser area.
+* Restores the open chat, saved position, and active conversation when users navigate within the same course.
+* Keeps the static full-page assistant on a separate page with a Return to course control.
+* Provides conversation history, copy, download, speech input, and read-aloud controls.
+* Keeps suggested actions and the compact composer inside the chat at every supported width.
+* Provides Read aloud for the welcome message as well as subsequent assistant responses.
+* Provides administrator-selected assistant names, colors, icons, response languages, providers, and models.
+* Enforces Moodle capabilities, session-key protection, privacy metadata, and role-aware response policies.
+2.1.0-rc28
+============
+
+• Shows the complete AI Course Assistant title without truncation.
+• Shows every quick-action label in full using a readable two-column layout.
+• Allows header controls to wrap safely on constrained assistant widths.
+• Adds drag resizing for the floating assistant and remembers its size and position.
+2.1.0
+=====
+
+Stable Moodle Marketplace release based on the approved RC28 interface.
+
+• Complete responsive title and quick-action labels.
+• Movable and resizable floating assistant with saved size and position.
+• Course-aware guidance, conversation history, speech input, and read aloud.
+• Configurable Gemini or OpenAI provider and assistant branding.
+• Moodle Privacy API and capability-aware access controls.

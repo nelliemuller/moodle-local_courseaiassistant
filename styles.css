@@ -1,0 +1,2453 @@
+.local_courseaiassistant {
+    --course-ai-primary: var(--bs-primary, var(--primary, #0f6cbf));
+    --course-ai-primary-dark: var(--bs-primary, var(--primary, #0f6cbf));
+    --course-ai-border: #e3e7ee;
+    --course-ai-surface: #ffffff;
+    --course-ai-background: #f7f8fc;
+    --course-ai-text: #20242c;
+    --course-ai-muted: #687386;
+}
+
+.local_courseaiassistant .card-body {
+    padding: 0 !important;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.local_courseaiassistant .card-title,
+.local_courseaiassistant .block-title {
+    display: block !important;
+}
+
+.local_courseaiassistant .course-ai-chat-box {
+    container-type: inline-size;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 0 !important;
+    overflow: hidden;
+    border: 1px solid var(--course-ai-border) !important;
+    border-radius: 16px !important;
+    background: var(--course-ai-surface) !important;
+    box-shadow: 0 10px 30px rgba(29, 34, 46, 0.10);
+}
+
+.local_courseaiassistant .course-ai-modern-header {
+    display: flex;
+    align-items: center;
+    min-height: 66px;
+    padding: 12px 14px;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--course-ai-primary-dark), var(--course-ai-primary));
+}
+
+.local_courseaiassistant .course-ai-header-star {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    margin-right: 11px;
+    border-radius: 13px;
+    color: var(--course-ai-primary);
+    background: #ffffff;
+    font-size: 26px;
+    line-height: 1;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15);
+}
+
+.local_courseaiassistant .course-ai-header-star img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    border-radius: inherit;
+    object-fit: contain;
+    background: #ffffff;
+}
+
+.local_courseaiassistant .course-ai-header-text {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.local_courseaiassistant .course-ai-header-title {
+    margin: 0;
+    overflow: hidden;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.local_courseaiassistant .course-ai-header-subtitle {
+    margin-top: 2px;
+    overflow: hidden;
+    font-size: 11px;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0.88;
+}
+
+.local_courseaiassistant .course-ai-collapse-button,
+.local_courseaiassistant .course-ai-history-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin-left: 6px;
+    padding: 0;
+    color: #ffffff;
+    cursor: pointer;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 20px;
+    line-height: 1;
+}
+
+.local_courseaiassistant .course-ai-collapse-button:hover,
+.local_courseaiassistant .course-ai-history-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.local_courseaiassistant .course-ai-chat-history {
+    box-sizing: border-box;
+    display: block !important;
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 60vh !important;
+    margin: 0 !important;
+    padding: 18px 14px !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--course-ai-background) !important;
+    scroll-behavior: smooth;
+}
+
+.local_courseaiassistant .course-ai-message {
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    color: var(--course-ai-text);
+    white-space: normal !important;
+}
+
+.local_courseaiassistant .course-ai-assistant-message {
+    justify-content: flex-start;
+    text-align: left !important;
+}
+
+.local_courseaiassistant .course-ai-user-message {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    text-align: left !important;
+}
+
+.local_courseaiassistant .course-ai-message-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.local_courseaiassistant .course-ai-assistant-message .course-ai-message-avatar {
+    margin-right: 9px;
+    color: #ffffff;
+    background: var(--course-ai-primary);
+    font-size: 21px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+}
+
+.local_courseaiassistant .course-ai-user-message .course-ai-message-avatar {
+    margin-left: 9px;
+    border: 2px solid #ffffff;
+    background: #e5e9f0;
+    box-shadow: 0 3px 10px rgba(30, 40, 60, 0.16);
+}
+
+.local_courseaiassistant .course-ai-message-avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.local_courseaiassistant .course-ai-assistant-message .course-ai-message-avatar img {
+    padding: 3px;
+    object-fit: contain;
+    background: #ffffff;
+}
+
+.local_courseaiassistant .course-ai-message-bubble {
+    box-sizing: border-box;
+    width: fit-content;
+    max-width: calc(100% - 50px);
+    min-width: 0;
+    flex: 0 1 auto;
+    padding: 11px 13px;
+    overflow-wrap: anywhere;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: normal !important;
+}
+
+.local_courseaiassistant .course-ai-message-bubble .course-ai-response-list {
+    margin: 0.35rem 0 0.85rem 1.35rem;
+    padding-left: 1rem;
+    list-style-position: outside;
+}
+
+.local_courseaiassistant .course-ai-message-bubble .course-ai-response-list li {
+    margin: 0 0 0.4rem;
+    padding-left: 0.2rem;
+}
+
+.local_courseaiassistant .course-ai-message-bubble .course-ai-numbered-heading {
+    margin-top: 0.9rem;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+}
+
+.local_courseaiassistant .course-ai-assistant-message .course-ai-message-bubble {
+    border: 1px solid #e3e7ee;
+    border-top-left-radius: 5px;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(34, 36, 44, 0.07);
+}
+
+.local_courseaiassistant .course-ai-user-message .course-ai-message-bubble {
+    color: #ffffff;
+    border-top-right-radius: 5px;
+    background: var(--course-ai-primary);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+}
+
+.local_courseaiassistant .course-ai-message-bubble p {
+    margin: 0 0 7px !important;
+    padding: 0 !important;
+}
+
+.local_courseaiassistant .course-ai-message-bubble p:last-child {
+    margin-bottom: 0 !important;
+}
+
+.local_courseaiassistant .course-ai-message-bubble a {
+    overflow-wrap: anywhere;
+    color: #2f5fb3;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.local_courseaiassistant .course-ai-user-message .course-ai-message-bubble a {
+    color: #ffffff !important;
+}
+
+.local_courseaiassistant .course-ai-error .course-ai-message-bubble {
+    color: #8b1027;
+    border-color: #efc3cc;
+    background: #fff4f6;
+}
+
+.local_courseaiassistant .course-ai-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 0 !important;
+    padding: 10px 12px 0;
+    background: #ffffff;
+}
+
+.local_courseaiassistant .course-ai-quick-action {
+    padding: 7px 10px;
+    color: var(--course-ai-primary-dark);
+    cursor: pointer;
+    border: 1px solid #d7dde6;
+    border-radius: 999px;
+    background: #f7f8fc;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.local_courseaiassistant .course-ai-quick-action:hover {
+    color: #ffffff;
+    border-color: var(--course-ai-primary);
+    background: var(--course-ai-primary);
+}
+
+.local_courseaiassistant .course-ai-chat-controls {
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+    padding: 12px !important;
+    border-top: 1px solid var(--course-ai-border);
+    background: #ffffff;
+}
+
+.local_courseaiassistant .course-ai-chat-input {
+    box-sizing: border-box;
+    min-width: 0;
+    height: 44px;
+    flex: 1 1 auto;
+    padding: 10px 13px !important;
+    border: 1px solid #ccd3df !important;
+    border-radius: 22px !important;
+    background: #f8f9fc !important;
+    font-size: 14px;
+    outline: none;
+}
+
+.local_courseaiassistant .course-ai-chat-input:focus {
+    border-color: var(--course-ai-primary) !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.10);
+}
+
+.local_courseaiassistant .course-ai-send-button {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px !important;
+    height: 44px;
+    padding: 0 15px !important;
+    color: #ffffff !important;
+    cursor: pointer;
+    border: 0 !important;
+    border-radius: 22px !important;
+    background: var(--course-ai-primary) !important;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 5px 13px rgba(0, 0, 0, 0.16);
+}
+
+.local_courseaiassistant .course-ai-send-button:hover {
+    background: var(--course-ai-primary-dark) !important;
+}
+
+.local_courseaiassistant .course-ai-send-button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.local_courseaiassistant .course-ai-new-chat-button {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 42px !important;
+    min-width: 42px;
+    height: 42px !important;
+    padding: 0 !important;
+    color: var(--course-ai-primary) !important;
+    cursor: pointer;
+    border: 1px solid #d7dde6 !important;
+    border-radius: 50% !important;
+    background: #f7f8fc !important;
+}
+
+.local_courseaiassistant .course-ai-history-panel {
+    position: absolute;
+    z-index: 1000;
+    top: 70px;
+    right: 10px;
+    left: 10px;
+    display: none;
+    max-height: 360px;
+    overflow-y: auto;
+    padding: 12px;
+    border: 1px solid #dfe3e8;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 14px 35px rgba(26, 23, 39, 0.18);
+}
+
+.local_courseaiassistant .course-ai-history-panel.is-open {
+    display: block;
+}
+
+.local_courseaiassistant .course-ai-history-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #20242c;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.local_courseaiassistant .course-ai-history-close {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    color: #687386;
+    cursor: pointer;
+    border: 0;
+    border-radius: 50%;
+    background: #f2f4f7;
+    font-size: 18px;
+}
+
+.local_courseaiassistant .course-ai-history-empty {
+    padding: 18px 8px;
+    color: #687386;
+    text-align: center;
+    font-size: 13px;
+}
+
+.local_courseaiassistant .course-ai-history-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 9px;
+    border: 1px solid #e3e7ee;
+    border-radius: 10px;
+    background: #f7f8fc;
+}
+
+.local_courseaiassistant .course-ai-history-open {
+    min-width: 0;
+    flex: 1 1 auto;
+    padding: 0;
+    color: #20242c;
+    cursor: pointer;
+    border: 0;
+    background: transparent;
+    text-align: left;
+}
+
+.local_courseaiassistant .course-ai-history-title {
+    display: block;
+    overflow: hidden;
+    font-size: 13px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.local_courseaiassistant .course-ai-history-date {
+    display: block;
+    margin-top: 2px;
+    color: #687386;
+    font-size: 11px;
+}
+
+.local_courseaiassistant .course-ai-history-delete {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    padding: 0;
+    color: #a12b45;
+    cursor: pointer;
+    border: 0;
+    border-radius: 50%;
+    background: #fff0f3;
+    font-size: 15px;
+}
+
+.local_courseaiassistant .course-ai-history-clear-all {
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px 10px;
+    color: #8c2941;
+    cursor: pointer;
+    border: 1px solid #f0cbd4;
+    border-radius: 9px;
+    background: #fff7f9;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.local_courseaiassistant .course-ai-chat-box.course-ai-collapsed .course-ai-chat-history,
+.local_courseaiassistant .course-ai-chat-box.course-ai-collapsed .course-ai-quick-actions,
+.local_courseaiassistant .course-ai-chat-box.course-ai-collapsed .course-ai-chat-controls {
+    display: none !important;
+}
+
+@media (max-width: 480px) {
+    .local_courseaiassistant .course-ai-chat-history {
+        min-height: 210px !important;
+        padding: 14px 10px !important;
+    }
+
+    .local_courseaiassistant .course-ai-message-bubble {
+        max-width: calc(100% - 44px);
+        padding: 10px 11px;
+        font-size: 13px;
+    }
+
+    .local_courseaiassistant .course-ai-message-avatar {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+    }
+
+    .local_courseaiassistant .course-ai-chat-controls {
+        flex-wrap: wrap;
+    }
+
+    .local_courseaiassistant .course-ai-chat-input {
+        flex-basis: calc(100% - 52px);
+    }
+
+    .local_courseaiassistant .course-ai-send-button {
+        flex: 1 1 auto;
+    }
+}
+
+
+/* 0.9.10 migration safeguards: prevent legacy Additional HTML from narrowing native messages. */
+.local_courseaiassistant .course-ai-message > .course-ai-message-bubble {
+    width: auto !important;
+    max-width: calc(100% - 50px) !important;
+    flex: 0 1 auto !important;
+}
+
+.local_courseaiassistant .course-ai-message-bubble > .course-ai-message-avatar,
+.local_courseaiassistant .course-ai-message-bubble > .course-ai-message-bubble {
+    display: none !important;
+}
+
+
+@media (max-width: 480px) {
+    .local_courseaiassistant .course-ai-message > .course-ai-message-bubble {
+        max-width: calc(100% - 44px) !important;
+    }
+}
+
+
+/* 0.9.11: compact native message layout and resist legacy theme/Additional HTML rules. */
+.local_courseaiassistant .course-ai-chat-history,
+.local_courseaiassistant .course-ai-message,
+.local_courseaiassistant .course-ai-message-bubble {
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+.local_courseaiassistant .course-ai-message {
+    align-content: flex-start !important;
+    justify-content: flex-start !important;
+}
+
+.local_courseaiassistant .course-ai-user-message {
+    justify-content: flex-start !important;
+}
+
+.local_courseaiassistant .course-ai-message > .course-ai-message-bubble {
+    display: block !important;
+    width: auto !important;
+    max-width: calc(100% - 50px) !important;
+    flex: 0 1 auto !important;
+    white-space: normal !important;
+}
+
+.local_courseaiassistant .course-ai-assistant-message[data-initial-message="1"] > .course-ai-message-bubble {
+    width: calc(100% - 50px) !important;
+}
+
+.local_courseaiassistant .course-ai-message-bubble p {
+    display: block !important;
+    margin: 0 0 8px 0 !important;
+    padding: 0 !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+}
+
+.local_courseaiassistant .course-ai-message-bubble p:last-child {
+    margin-bottom: 0 !important;
+}
+
+@media (max-width: 480px) {
+    .local_courseaiassistant .course-ai-assistant-message[data-initial-message="1"] > .course-ai-message-bubble {
+        width: calc(100% - 44px) !important;
+    }
+}
+
+/* 0.9.12: responsive mobile layout for narrow Moodle block drawers and phones. */
+.local_courseaiassistant,
+.local_courseaiassistant .card-body,
+.local_courseaiassistant .course-ai-chat-box {
+    max-width: 100% !important;
+    min-width: 0 !important;
+}
+
+.local_courseaiassistant .course-ai-message-bubble,
+.local_courseaiassistant .course-ai-message-bubble a,
+.local_courseaiassistant .course-ai-message-bubble pre,
+.local_courseaiassistant .course-ai-message-bubble code {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+@media (max-width: 600px) {
+    .local_courseaiassistant .card-body {
+        border-radius: 12px;
+    }
+
+    .local_courseaiassistant .course-ai-chat-box {
+        border-radius: 12px !important;
+        box-shadow: 0 5px 18px rgba(29, 34, 46, 0.10);
+    }
+
+    .local_courseaiassistant .course-ai-modern-header {
+        min-height: 56px;
+        gap: 7px;
+        padding: 9px 10px;
+    }
+
+    .local_courseaiassistant .course-ai-header-star {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+        margin-right: 2px;
+        border-radius: 10px;
+        font-size: 21px;
+    }
+
+    .local_courseaiassistant .course-ai-header-title {
+        font-size: 15px;
+        white-space: normal;
+    }
+
+    .local_courseaiassistant .course-ai-header-subtitle {
+        font-size: 10px;
+        white-space: normal;
+    }
+
+    .local_courseaiassistant .course-ai-collapse-button,
+    .local_courseaiassistant .course-ai-history-button {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        margin-left: 0;
+        font-size: 17px;
+    }
+
+    .local_courseaiassistant .course-ai-chat-history {
+        max-height: 52vh !important;
+        padding: 12px 8px !important;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .local_courseaiassistant .course-ai-message {
+        margin-bottom: 12px !important;
+    }
+
+    .local_courseaiassistant .course-ai-message-avatar {
+        width: 30px;
+        height: 30px;
+        flex-basis: 30px;
+        font-size: 18px !important;
+    }
+
+    .local_courseaiassistant .course-ai-assistant-message .course-ai-message-avatar {
+        margin-right: 6px;
+    }
+
+    .local_courseaiassistant .course-ai-user-message .course-ai-message-avatar {
+        margin-left: 6px;
+    }
+
+    .local_courseaiassistant .course-ai-message > .course-ai-message-bubble,
+    .local_courseaiassistant .course-ai-assistant-message[data-initial-message="1"] > .course-ai-message-bubble {
+        width: auto !important;
+        max-width: calc(100% - 36px) !important;
+        padding: 9px 10px;
+        border-radius: 13px;
+        font-size: 14px;
+        line-height: 1.45;
+    }
+
+    .local_courseaiassistant .course-ai-assistant-message[data-initial-message="1"] > .course-ai-message-bubble {
+        width: calc(100% - 36px) !important;
+    }
+
+    .local_courseaiassistant .course-ai-message-bubble p {
+        margin-bottom: 6px !important;
+        line-height: 1.45 !important;
+    }
+
+    .local_courseaiassistant .course-ai-quick-actions {
+        flex-wrap: nowrap;
+        gap: 6px;
+        padding: 8px 8px 4px;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .local_courseaiassistant .course-ai-quick-action {
+        flex: 0 0 auto;
+        min-height: 36px;
+        padding: 7px 9px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .local_courseaiassistant .course-ai-chat-controls {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) 42px;
+        gap: 8px;
+        padding: 9px !important;
+        padding-bottom: max(9px, env(safe-area-inset-bottom)) !important;
+    }
+
+    .local_courseaiassistant .course-ai-chat-input {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: 44px;
+        flex-basis: auto;
+        font-size: 16px;
+    }
+
+    .local_courseaiassistant .course-ai-send-button {
+        grid-column: 1;
+        width: 100%;
+        min-width: 0 !important;
+        height: 42px;
+    }
+
+    .local_courseaiassistant .course-ai-new-chat-button {
+        grid-column: 2;
+        width: 42px !important;
+        min-width: 42px;
+        height: 42px !important;
+    }
+
+    .local_courseaiassistant .course-ai-history-panel {
+        top: 60px;
+        right: 6px;
+        left: 6px;
+        max-height: calc(100dvh - 130px);
+        padding: 10px;
+        border-radius: 12px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .local_courseaiassistant .course-ai-history-item {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 360px) {
+    .local_courseaiassistant .course-ai-header-subtitle {
+        display: none;
+    }
+
+    .local_courseaiassistant .course-ai-header-title {
+        font-size: 14px;
+    }
+
+    .local_courseaiassistant .course-ai-modern-header {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    .local_courseaiassistant .course-ai-message > .course-ai-message-bubble,
+    .local_courseaiassistant .course-ai-assistant-message[data-initial-message="1"] > .course-ai-message-bubble {
+        max-width: calc(100% - 34px) !important;
+    }
+}
+
+/* 1.0 Phase 1: native chat history, download, microphone, and read-aloud controls. */
+.local_courseaiassistant .course-ai-mic-button,
+.local_courseaiassistant .course-ai-read-button,
+.local_courseaiassistant .course-ai-history-rename,
+.local_courseaiassistant .course-ai-history-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid #d7dde6;
+    background: #f7f8fc;
+    color: var(--course-ai-primary);
+}
+
+.local_courseaiassistant .course-ai-mic-button {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    border-radius: 50%;
+}
+
+.local_courseaiassistant .course-ai-read-button {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    margin-left: 6px;
+    border-radius: 50%;
+    font-size: 14px;
+}
+
+.local_courseaiassistant .course-ai-history-rename,
+.local_courseaiassistant .course-ai-history-download {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    padding: 0;
+    border-radius: 50%;
+    text-decoration: none;
+}
+
+@media (max-width: 600px) {
+    .local_courseaiassistant .course-ai-chat-controls {
+        grid-template-columns: 42px minmax(0, 1fr) 42px;
+    }
+
+    .local_courseaiassistant .course-ai-chat-input {
+        grid-column: 1 / -1;
+    }
+
+    .local_courseaiassistant .course-ai-mic-button {
+        grid-column: 1;
+    }
+
+    .local_courseaiassistant .course-ai-send-button {
+        grid-column: 2;
+    }
+
+    .local_courseaiassistant .course-ai-new-chat-button {
+        grid-column: 3;
+    }
+}
+
+
+/* 1.0.1: visible download controls and role-aware interface. */
+.local_courseaiassistant .course-ai-download-current-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    margin-left: 6px;
+    padding: 0;
+    color: #fff;
+    cursor: pointer;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 20px;
+}
+
+.local_courseaiassistant .course-ai-download-current-button:hover,
+.local_courseaiassistant .course-ai-download-current-button:focus {
+    background: rgba(255, 255, 255, 0.27);
+}
+
+.local_courseaiassistant .course-ai-history-download-group {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 4px;
+}
+
+.local_courseaiassistant .course-ai-history-download {
+    width: auto;
+    min-width: 38px;
+    height: 32px;
+    padding: 0 7px;
+    border-radius: 9px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+@media (max-width: 600px) {
+    .local_courseaiassistant .course-ai-modern-header {
+        gap: 4px;
+    }
+
+    .local_courseaiassistant .course-ai-download-current-button,
+    .local_courseaiassistant .course-ai-history-button,
+    .local_courseaiassistant .course-ai-collapse-button {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+        margin-left: 2px;
+    }
+
+    .local_courseaiassistant .course-ai-history-item {
+        flex-wrap: wrap;
+    }
+
+    .local_courseaiassistant .course-ai-history-open {
+        flex-basis: calc(100% - 40px);
+    }
+
+    .local_courseaiassistant .course-ai-history-download-group {
+        order: 3;
+        width: 100%;
+        margin-top: 6px;
+    }
+}
+
+
+/* Public-release responsive controls: react to the block width, not only the viewport. */
+@container (max-width: 430px) {
+    .course-ai-chat-controls {
+        display: grid !important;
+        grid-template-columns: 42px minmax(0, 1fr) 42px;
+        gap: 8px;
+        padding: 9px !important;
+    }
+
+    .course-ai-chat-input {
+        grid-column: 1 / -1;
+        width: 100%;
+        min-width: 0;
+        font-size: 16px;
+    }
+
+    .course-ai-mic-button {
+        grid-column: 1;
+    }
+
+    .course-ai-send-button {
+        grid-column: 2;
+        width: 100%;
+        min-width: 0 !important;
+    }
+
+    .course-ai-new-chat-button {
+        grid-column: 3;
+    }
+}
+
+/* =========================================================
+   1.1.0 Public Beta: configurable placement and compact composer.
+   ========================================================= */
+
+.local_courseaiassistant .course-ai-launcher-button,
+.course-ai-chat-box .course-ai-launcher-button {
+    display: none;
+}
+
+.course-ai-chat-box.course-ai-placement-button > .course-ai-panel,
+.course-ai-chat-box.course-ai-placement-floating > .course-ai-panel {
+    display: none;
+}
+
+.course-ai-chat-box.course-ai-placement-button.course-ai-open > .course-ai-panel,
+.course-ai-chat-box.course-ai-placement-floating.course-ai-open > .course-ai-panel {
+    display: block;
+}
+
+.course-ai-chat-box.course-ai-placement-button > .course-ai-launcher-button,
+.course-ai-chat-box.course-ai-placement-floating > .course-ai-launcher-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 42px;
+    padding: 9px 15px;
+    color: #fff;
+    cursor: pointer;
+    border: 0;
+    border-radius: 999px;
+    background: var(--course-ai-primary);
+    font-weight: 700;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.16);
+}
+
+.course-ai-chat-box.course-ai-placement-floating {
+    position: fixed;
+    z-index: 1040;
+    right: 20px;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    width: auto;
+    max-width: min(420px, calc(100vw - 24px));
+}
+
+.course-ai-chat-box.course-ai-placement-floating.course-ai-open {
+    width: min(420px, calc(100vw - 24px));
+}
+
+/* The universal local-plugin drawer owns positioning. Keep its chat contained. */
+.local-courseaiassistant-drawer
+.course-ai-chat-box.course-ai-placement-floating,
+.local-courseaiassistant-drawer
+.course-ai-chat-box.course-ai-placement-floating.course-ai-open {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.course-ai-chat-box.course-ai-placement-button.course-ai-open {
+    position: fixed;
+    z-index: 1040;
+    top: 88px;
+    right: 20px;
+    width: min(420px, calc(100vw - 24px));
+    max-height: calc(100vh - 108px);
+}
+
+.course-ai-header-launcher {
+    margin-inline-start: 12px;
+}
+
+.course-ai-launcher-fallback-hidden {
+    display: none !important;
+}
+
+.course-ai-open-fullpage-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    margin-left: 4px;
+    color: #fff !important;
+    text-decoration: none !important;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 18px;
+}
+
+.course-ai-fullpage-view {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.course-ai-fullpage-view .course-ai-chat-box {
+    width: 100%;
+}
+
+/* Keep the persistent browser pop-out clean and independent of site overlays. */
+body.local-courseaiassistant-popup-page {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #fff !important;
+}
+
+body.local-courseaiassistant-popup-page > :not(.course-ai-fullpage-view) {
+    display: none !important;
+}
+
+body.local-courseaiassistant-popup-page .course-ai-fullpage-view {
+    position: fixed !important;
+    z-index: 2147483646 !important;
+    inset: 0 !important;
+    display: flex !important;
+    width: 100vw !important;
+    max-width: none !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #fff !important;
+}
+
+body.local-courseaiassistant-popup-page .course-ai-fullpage-view .course-ai-chat-box,
+body.local-courseaiassistant-popup-page .course-ai-fullpage-view .course-ai-panel {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+body.local-courseaiassistant-popup-page .course-ai-fullpage-view .course-ai-chat-history {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+}
+
+.course-ai-fullpage-view .course-ai-popout-button {
+    display: inline-flex;
+}
+
+.course-ai-fullpage-view .course-ai-chat-box.course-ai-popped-out {
+    position: fixed !important;
+    z-index: 1060 !important;
+    top: var(--course-ai-popout-top, 72px) !important;
+    left: var(--course-ai-popout-left, calc(100vw - 540px)) !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: min(520px, calc(100vw - 24px)) !important;
+    max-width: calc(100vw - 24px) !important;
+    height: min(760px, calc(100vh - 24px)) !important;
+    max-height: calc(100vh - 24px) !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    box-shadow: 0 18px 54px rgba(0, 0, 0, 0.3) !important;
+}
+
+.course-ai-fullpage-view .course-ai-chat-box.course-ai-popped-out > .course-ai-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+}
+
+.course-ai-fullpage-view .course-ai-chat-box.course-ai-popped-out .course-ai-modern-header {
+    cursor: move;
+    touch-action: none;
+    user-select: none;
+}
+
+.course-ai-fullpage-view .course-ai-chat-box.course-ai-is-dragging {
+    transition: none !important;
+}
+
+@media (max-width: 767.98px) {
+    .course-ai-fullpage-view .course-ai-popout-button {
+        display: none !important;
+    }
+
+    .course-ai-fullpage-view .course-ai-chat-box.course-ai-popped-out {
+        position: static !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        box-shadow: none !important;
+    }
+}
+
+.course-ai-dashboard-chooser ul {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+/* Reliable composer: the text field always gets a full row. */
+.local_courseaiassistant .course-ai-chat-controls,
+.course-ai-fullpage-view .course-ai-chat-controls,
+.course-ai-chat-box .course-ai-chat-controls {
+    display: grid !important;
+    grid-template-columns: 44px minmax(90px, 1fr) 44px !important;
+    gap: 8px !important;
+    align-items: center !important;
+}
+
+.local_courseaiassistant .course-ai-chat-input,
+.course-ai-fullpage-view .course-ai-chat-input,
+.course-ai-chat-box .course-ai-chat-input {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+}
+
+.local_courseaiassistant .course-ai-mic-button,
+.course-ai-fullpage-view .course-ai-mic-button,
+.course-ai-chat-box .course-ai-mic-button {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+}
+
+.local_courseaiassistant .course-ai-send-button,
+.course-ai-fullpage-view .course-ai-send-button,
+.course-ai-chat-box .course-ai-send-button {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.local_courseaiassistant .course-ai-new-chat-button,
+.course-ai-fullpage-view .course-ai-new-chat-button,
+.course-ai-chat-box .course-ai-new-chat-button {
+    grid-column: 3 !important;
+    grid-row: 2 !important;
+}
+
+@media (max-width: 600px) {
+    .course-ai-chat-box.course-ai-placement-floating,
+    .course-ai-chat-box.course-ai-placement-floating.course-ai-open,
+    .course-ai-chat-box.course-ai-placement-button.course-ai-open {
+        right: 8px;
+        left: 8px;
+        width: auto;
+        max-width: none;
+    }
+
+    .course-ai-chat-box.course-ai-placement-button.course-ai-open {
+        top: 72px;
+    }
+}
+
+/* 1.3.0 build 2026081212: compact narrow-block conversation layout. */
+@media (max-width: 600px) {
+    .local_courseaiassistant .course-ai-assistant-message {
+        display: grid !important;
+        grid-template-columns: 24px minmax(0, 1fr) !important;
+        grid-template-rows: auto auto !important;
+        column-gap: 5px !important;
+        row-gap: 5px !important;
+        align-items: start !important;
+    }
+
+    .local_courseaiassistant .course-ai-assistant-message > .course-ai-message-avatar {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        width: 24px !important;
+        height: 24px !important;
+        flex-basis: 24px !important;
+        margin: 0 !important;
+        font-size: 14px !important;
+    }
+
+    .local_courseaiassistant .course-ai-assistant-message > .course-ai-message-bubble,
+    .local_courseaiassistant .course-ai-assistant-message[data-initial-message="1"] > .course-ai-message-bubble {
+        grid-column: 2 !important;
+        grid-row: 1 / span 2 !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 9px 10px !important;
+    }
+
+    .local_courseaiassistant .course-ai-assistant-message > .course-ai-read-button {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        width: 24px !important;
+        min-width: 24px !important;
+        height: 24px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 12px !important;
+        line-height: 1 !important;
+        align-self: start !important;
+    }
+
+    .local_courseaiassistant .course-ai-user-message > .course-ai-message-avatar {
+        width: 24px !important;
+        height: 24px !important;
+        flex-basis: 24px !important;
+        margin-left: 5px !important;
+    }
+
+    .local_courseaiassistant .course-ai-user-message > .course-ai-message-bubble {
+        max-width: calc(100% - 29px) !important;
+    }
+
+    .local_courseaiassistant .course-ai-header-star {
+        width: 28px !important;
+        height: 28px !important;
+        flex-basis: 28px !important;
+        font-size: 17px !important;
+    }
+
+    .local_courseaiassistant .course-ai-popout-button,
+    .local_courseaiassistant .course-ai-download-current-button,
+    .local_courseaiassistant .course-ai-history-button,
+    .local_courseaiassistant .course-ai-collapse-button {
+        width: 28px !important;
+        min-width: 28px !important;
+        height: 28px !important;
+        flex-basis: 28px !important;
+        margin-left: 2px !important;
+        font-size: 15px !important;
+    }
+}
+
+/* 1.3.0 build 2026081214: clear block-to-assistant navigation. */
+.local_courseaiassistant .course-ai-open-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--course-ai-border);
+    background: var(--course-ai-surface);
+}
+
+.local_courseaiassistant .course-ai-open-fullpage-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 5px 12px;
+    border: 1px solid var(--course-ai-primary);
+    border-radius: 999px;
+    color: var(--course-ai-primary) !important;
+    background: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none !important;
+    white-space: nowrap;
+}
+
+.local_courseaiassistant .course-ai-open-fullpage-button:hover,
+.local_courseaiassistant .course-ai-open-fullpage-button:focus {
+    color: #ffffff !important;
+    background: var(--course-ai-primary);
+}
+
+.course-ai-fullpage-view .course-ai-return-button {
+    font-weight: 700;
+}
+
+@container (max-width: 430px) {
+    .local_courseaiassistant .course-ai-open-row {
+        justify-content: stretch;
+        padding: 5px 8px;
+    }
+
+    .local_courseaiassistant .course-ai-open-fullpage-button {
+        width: 100%;
+        min-height: 30px;
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+}
+
+
+
+/* 1.3.0 build 20260813: readable vertical response layout. */
+.local_courseaiassistant .course-ai-assistant-message .course-ai-message-bubble {
+    white-space: pre-line !important;
+}
+
+.local_courseaiassistant .course-ai-assistant-message .course-ai-link {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   1.3.0 build 20260813
+   New Chat is a header utility control.
+   ========================================================= */
+
+.local_courseaiassistant
+.course-ai-modern-header
+.course-ai-new-chat-button,
+.course-ai-fullpage-view
+.course-ai-modern-header
+.course-ai-new-chat-button,
+.course-ai-chat-box
+.course-ai-modern-header
+.course-ai-new-chat-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    grid-column: auto !important;
+    grid-row: auto !important;
+
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+
+    margin-left: 6px !important;
+    padding: 0 !important;
+
+    color: #ffffff !important;
+    cursor: pointer;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+
+    font-size: 18px;
+    line-height: 1;
+}
+
+.local_courseaiassistant
+.course-ai-modern-header
+.course-ai-new-chat-button:hover,
+.local_courseaiassistant
+.course-ai-modern-header
+.course-ai-new-chat-button:focus,
+.course-ai-fullpage-view
+.course-ai-modern-header
+.course-ai-new-chat-button:hover,
+.course-ai-fullpage-view
+.course-ai-modern-header
+.course-ai-new-chat-button:focus {
+    background: rgba(255, 255, 255, 0.27) !important;
+}
+
+@media (max-width: 600px) {
+    .local_courseaiassistant
+    .course-ai-modern-header
+    .course-ai-new-chat-button {
+        width: 28px !important;
+        min-width: 28px !important;
+        height: 28px !important;
+        flex-basis: 28px !important;
+        margin-left: 2px !important;
+        font-size: 15px;
+    }
+}
+
+
+/* =========================================================
+   1.3.0 build 20260813
+   Matching utility controls at top and bottom.
+   Applies to Moodle block and full assistant view.
+   ========================================================= */
+
+.course-ai-chat-box .course-ai-bottom-utilities {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+    width: 100%;
+    padding: 7px 10px 10px;
+    box-sizing: border-box;
+    background: var(--course-ai-surface, #ffffff);
+}
+
+.course-ai-chat-box
+.course-ai-bottom-utilities
+.course-ai-bottom-utility {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    grid-column: auto !important;
+    grid-row: auto !important;
+
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    flex: 0 0 34px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: var(--course-ai-primary) !important;
+    cursor: pointer;
+    border: 1px solid var(--course-ai-border) !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+
+    font-size: 17px;
+    line-height: 1;
+    box-shadow: none !important;
+}
+
+.course-ai-chat-box
+.course-ai-bottom-utilities
+.course-ai-bottom-utility:hover,
+.course-ai-chat-box
+.course-ai-bottom-utilities
+.course-ai-bottom-utility:focus {
+    color: #ffffff !important;
+    border-color: var(--course-ai-primary) !important;
+    background: var(--course-ai-primary) !important;
+}
+
+@container (max-width: 430px) {
+    .local_courseaiassistant .course-ai-bottom-utilities {
+        gap: 5px;
+        padding: 6px 8px 8px;
+    }
+
+    .local_courseaiassistant
+    .course-ai-bottom-utilities
+    .course-ai-bottom-utility {
+        width: 30px !important;
+        min-width: 30px !important;
+        height: 30px !important;
+        flex-basis: 30px !important;
+        font-size: 15px;
+    }
+}
+
+
+/* Preserve Moodle block action menus.
+   AI Course Assistant content must not clip the three-dot menu. */
+
+.local_courseaiassistant .card-body {
+    overflow: visible !important;
+}
+
+.local_courseaiassistant .card {
+    overflow: visible !important;
+}
+
+
+/* AI Course Assistant Moodle block title box uses theme primary color */
+.local_courseaiassistant .card-header {
+    border-color: var(--bs-primary, var(--primary, #046EE6)) !important;
+}
+
+.local_courseaiassistant .card-header .card-title,
+.local_courseaiassistant .card-header .block-title {
+    color: var(--bs-primary, var(--primary, #046EE6)) !important;
+}
+
+
+/* Mobile assistant viewport fix */
+@media (max-width: 600px) {
+
+    .course-ai-chat-box.course-ai-placement-button.course-ai-open,
+    .course-ai-chat-box.course-ai-placement-floating.course-ai-open {
+        position: fixed !important;
+        left: 8px !important;
+        right: 8px !important;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
+    }
+
+    .course-ai-chat-box .course-ai-modern-header {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .course-ai-chat-box .course-ai-header-text {
+        min-width: 0 !important;
+        overflow: hidden !important;
+    }
+
+    .course-ai-chat-box .course-ai-header-title {
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    .course-ai-chat-box .course-ai-quick-actions {
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+    }
+}
+
+
+/*
+ * Universal AI Course Assistant controls.
+ *
+ * One professional control bar is used across public-plugin placements.
+ * Controls are text buttons rather than font-dependent Unicode icons.
+ */
+
+.course-ai-modern-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.course-ai-header-text {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.course-ai-header-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.course-ai-header-subtitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.course-ai-header-controls {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.course-ai-control-button {
+    width: auto !important;
+    min-width: 0 !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+.course-ai-collapse-control {
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+}
+
+.course-ai-bottom-utilities {
+    display: none !important;
+}
+
+/*
+ * Narrow layouts.
+ *
+ * Allow controls to remain usable without crushing the assistant title.
+ */
+@media (max-width: 640px) {
+    .course-ai-modern-header {
+        flex-wrap: wrap;
+    }
+
+    .course-ai-header-text {
+        flex: 1 1 calc(100% - 70px);
+    }
+
+    .course-ai-header-controls {
+        width: 100%;
+        justify-content: flex-start;
+        padding-top: 4px;
+    }
+
+    .course-ai-control-button {
+        flex: 0 0 auto;
+    }
+}
+
+/*
+ * ============================================================
+ * Public AI Course Assistant universal header actions
+ * ============================================================
+ *
+ * The same compact SVG controls are used in block, button,
+ * floating, drawer and responsive presentations.
+ */
+
+.course-ai-modern-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.course-ai-header-text {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.course-ai-header-title,
+.course-ai-header-subtitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.course-ai-header-actions {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.course-ai-header-action {
+    position: relative;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
+
+    height: 42px !important;
+    min-height: 42px !important;
+    max-height: 42px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 0 !important;
+    border-radius: 10px !important;
+
+    background: rgba(255,255,255,.14) !important;
+    color: #fff !important;
+
+    cursor: pointer !important;
+    box-shadow: none !important;
+}
+
+.course-ai-header-action:hover,
+.course-ai-header-action:focus-visible {
+    background: rgba(255,255,255,.24) !important;
+}
+
+.course-ai-action-icon {
+    width: 23px;
+    height: 23px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    pointer-events: none;
+}
+
+
+/*
+ * Hover and keyboard-focus labels.
+ */
+
+
+.course-ai-header-action:hover::after,
+.course-ai-header-action:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+
+/*
+ * Bottom duplicate controls are not part of the public UI.
+ */
+
+.course-ai-bottom-utilities {
+    display: none !important;
+}
+
+
+/*
+ * Keep all four quick actions together whenever space permits.
+ */
+
+.course-ai-quick-actions {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 7px !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.course-ai-quick-actions::-webkit-scrollbar {
+    display: none;
+}
+
+.course-ai-quick-action {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+}
+
+
+/*
+ * Responsive header.
+ */
+
+@media (max-width: 520px) {
+    .course-ai-modern-header {
+        gap: 8px;
+    }
+
+    .course-ai-header-actions {
+        gap: 4px;
+    }
+
+    .course-ai-header-action {
+        width: 38px !important;
+        min-width: 38px !important;
+        max-width: 38px !important;
+
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+    }
+
+    .course-ai-action-icon {
+        width: 21px;
+        height: 21px;
+    }
+}
+
+/*
+ * Final public header action treatment.
+ *
+ * Icons only.
+ * No visible text.
+ * No circular or pill backgrounds.
+ * Labels appear only as hover/focus tooltips.
+ */
+
+.course-ai-modern-header .course-ai-header-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex: 0 0 auto !important;
+    gap: 10px !important;
+}
+
+.course-ai-modern-header .course-ai-header-action,
+.course-ai-modern-header .course-ai-new-chat-button.course-ai-header-action,
+.course-ai-modern-header .course-ai-download-current-button.course-ai-header-action,
+.course-ai-modern-header .course-ai-history-button.course-ai-header-action {
+    position: relative !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 32px !important;
+    min-width: 32px !important;
+    max-width: 32px !important;
+
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: transparent !important;
+    background-color: transparent !important;
+
+    box-shadow: none !important;
+
+    color: #fff !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+
+    cursor: pointer !important;
+}
+
+.course-ai-modern-header .course-ai-header-action:hover,
+.course-ai-modern-header .course-ai-header-action:focus-visible {
+    background: transparent !important;
+    opacity: .78;
+}
+
+.course-ai-modern-header .course-ai-action-icon {
+    display: block !important;
+    width: 24px !important;
+    height: 24px !important;
+
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 2 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+
+    pointer-events: none !important;
+}
+
+
+/*
+ * Tooltip text appears only on hover or keyboard focus.
+ */
+
+.course-ai-modern-header .course-ai-header-action::after {
+    content: attr(data-tooltip);
+
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+
+    transform: translateX(-50%) translateY(-2px);
+
+    z-index: 9999;
+
+    padding: 6px 9px;
+
+    border-radius: 6px;
+
+    background: #20242c;
+    color: #fff;
+
+    font-size: 12px !important;
+    font-weight: 500;
+    line-height: 1.2 !important;
+    white-space: nowrap;
+
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity .15s ease,
+        transform .15s ease;
+}
+
+.course-ai-modern-header .course-ai-header-action:hover::after,
+.course-ai-modern-header .course-ai-header-action:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/*
+ * ==========================================================
+ * FINAL PUBLIC HEADER CONTROLS
+ * ==========================================================
+ */
+
+.course-ai-modern-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.course-ai-header-text {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+}
+
+.course-ai-header-title,
+.course-ai-header-subtitle {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.course-ai-header-actions {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+/*
+ * Icon controls are deliberately transparent.
+ * No circles. No pills. No permanent text.
+ */
+
+.course-ai-modern-header .course-ai-header-action {
+    position: relative !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 28px !important;
+    min-width: 28px !important;
+    max-width: 28px !important;
+
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: none !important;
+    background-color: transparent !important;
+    background-image: none !important;
+
+    box-shadow: none !important;
+
+    color: #fff !important;
+
+    font-size: 0 !important;
+    line-height: 0 !important;
+
+    cursor: pointer !important;
+}
+
+.course-ai-modern-header .course-ai-header-action:hover,
+.course-ai-modern-header .course-ai-header-action:focus-visible {
+    background: none !important;
+    box-shadow: none !important;
+    opacity: .78;
+}
+
+.course-ai-modern-header .course-ai-action-icon {
+    display: block !important;
+
+    width: 23px !important;
+    height: 23px !important;
+
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 2 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+
+    pointer-events: none !important;
+}
+
+/*
+ * Labels appear only on hover or keyboard focus.
+ */
+
+.course-ai-modern-header .course-ai-header-action::after {
+    content: attr(data-tooltip);
+
+    position: absolute;
+    top: calc(100% + 9px);
+    left: 50%;
+
+    z-index: 10000;
+
+    transform: translateX(-50%) translateY(-3px);
+
+    padding: 6px 9px;
+
+    border-radius: 6px;
+
+    background: #20242c !important;
+    color: #fff !important;
+
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+
+    white-space: nowrap;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.course-ai-modern-header .course-ai-header-action:hover::after,
+.course-ai-modern-header .course-ai-header-action:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateX(-50%) translateY(0);
+}
+
+/*
+ * No duplicate footer controls.
+ */
+
+.course-ai-bottom-utilities {
+    display: none !important;
+}
+
+/*
+ * Keep the four quick actions together whenever width permits.
+ */
+
+.course-ai-quick-actions {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 7px !important;
+
+    overflow-x: auto !important;
+    scrollbar-width: none;
+}
+
+.course-ai-quick-actions::-webkit-scrollbar {
+    display: none;
+}
+
+.course-ai-quick-action {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+}
+
+@media (max-width: 480px) {
+    .course-ai-header-actions {
+        gap: 8px !important;
+    }
+
+    .course-ai-modern-header .course-ai-header-action {
+        width: 26px !important;
+        min-width: 26px !important;
+        max-width: 26px !important;
+    }
+
+    .course-ai-modern-header .course-ai-action-icon {
+        width: 21px !important;
+        height: 21px !important;
+    }
+}
+
+
+/*
+ * Public Copy Chat control.
+ *
+ * Uses the same visual language as the other universal header actions.
+ * No permanent label, circle, pill, or custom hover text.
+ */
+
+.course-ai-modern-header .course-ai-copy-chat-button {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 28px !important;
+    min-width: 28px !important;
+    max-width: 28px !important;
+
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+
+    flex: 0 0 28px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: transparent !important;
+    box-shadow: none !important;
+
+    color: #fff !important;
+    cursor: pointer !important;
+}
+
+.course-ai-modern-header .course-ai-copy-chat-button:hover,
+.course-ai-modern-header .course-ai-copy-chat-button:focus-visible {
+    background: transparent !important;
+    box-shadow: none !important;
+    opacity: .78;
+}
+
+.course-ai-modern-header .course-ai-copy-chat-button.course-ai-copy-success {
+    opacity: .6;
+}
+
+/*
+ * Long descriptive links must remain inside every chat placement.
+ */
+
+.course-ai-chat-box .course-ai-message-bubble a,
+.course-ai-fullpage-view .course-ai-message-bubble a {
+    display: inline;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/*
+ * Universal public header controls.
+ *
+ * Header utility icons must remain visually clean across block,
+ * full-page, floating and other supported placements.
+ *
+ * No shadow, text shadow or filter is permitted on the controls
+ * or their SVG icons in any interaction state.
+ */
+
+.course-ai-modern-header .course-ai-header-controls button,
+.course-ai-modern-header .course-ai-header-action,
+.course-ai-modern-header .course-ai-control-button,
+.course-ai-modern-header .course-ai-new-chat-button,
+.course-ai-modern-header .course-ai-copy-chat-button,
+.course-ai-modern-header .course-ai-download-current-button,
+.course-ai-modern-header .course-ai-history-button,
+.course-ai-modern-header .course-ai-collapse-button {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+.course-ai-modern-header .course-ai-header-controls button:hover,
+.course-ai-modern-header .course-ai-header-controls button:focus,
+.course-ai-modern-header .course-ai-header-controls button:focus-visible,
+.course-ai-modern-header .course-ai-header-controls button:active,
+.course-ai-modern-header .course-ai-header-action:hover,
+.course-ai-modern-header .course-ai-header-action:focus,
+.course-ai-modern-header .course-ai-header-action:focus-visible,
+.course-ai-modern-header .course-ai-header-action:active {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+.course-ai-modern-header .course-ai-action-icon,
+.course-ai-modern-header .course-ai-action-icon:hover,
+.course-ai-modern-header .course-ai-action-icon:focus,
+.course-ai-modern-header .course-ai-action-icon:active {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+/*
+ * Public header controls must remain visually transparent
+ * when clicked, focused, tapped, or activated.
+ */
+
+.course-ai-modern-header .course-ai-header-controls button,
+.course-ai-modern-header .course-ai-header-action,
+.course-ai-modern-header .course-ai-control-button {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+
+    border: 0 !important;
+    outline: 0 !important;
+
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.course-ai-modern-header .course-ai-header-controls button:hover,
+.course-ai-modern-header .course-ai-header-controls button:focus,
+.course-ai-modern-header .course-ai-header-controls button:focus-visible,
+.course-ai-modern-header .course-ai-header-controls button:active,
+.course-ai-modern-header .course-ai-header-actions button:hover,
+.course-ai-modern-header .course-ai-header-actions button:focus,
+.course-ai-modern-header .course-ai-header-actions button:focus-visible,
+.course-ai-modern-header .course-ai-header-actions button:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+
+    border: 0 !important;
+    outline: 0 !important;
+
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+.course-ai-modern-header .course-ai-header-controls button::-moz-focus-inner {
+    border: 0 !important;
+}
+
+/*
+ * Public AI Course Assistant header interaction cleanup.
+ *
+ * Preserve the normal visual depth/shadows used by the interface.
+ * Remove only the obsolete custom tooltip pseudo-elements.
+ */
+
+.course-ai-modern-header .course-ai-header-action::before,
+.course-ai-modern-header .course-ai-header-action::after {
+    content: none !important;
+    display: none !important;
+}
+
+/*
+ * Restore normal Moodle/browser focus treatment.
+ * Previous temporary debugging rules incorrectly removed all shadows
+ * from these controls.
+ */
+
+.course-ai-modern-header .course-ai-header-controls button,
+.course-ai-modern-header .course-ai-header-action,
+.course-ai-modern-header .course-ai-control-button,
+.course-ai-modern-header .course-ai-new-chat-button,
+.course-ai-modern-header .course-ai-copy-chat-button,
+.course-ai-modern-header .course-ai-download-current-button,
+.course-ai-modern-header .course-ai-history-button,
+.course-ai-modern-header .course-ai-collapse-button {
+    text-shadow: initial;
+    filter: initial;
+}
+
+/*
+ * Keep the intentional assistant design shadows.
+ */
+
+.local_courseaiassistant .course-ai-header-star,
+.course-ai-modern-header .course-ai-header-star {
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15) !important;
+}
+
+.local_courseaiassistant .course-ai-assistant-message .course-ai-message-avatar {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16) !important;
+}
+
+.local_courseaiassistant .course-ai-send-button {
+    box-shadow: 0 5px 13px rgba(0, 0, 0, 0.16) !important;
+}
+
+/*
+ * 2.1.0 RC27 layout correction.
+ *
+ * Keep every suggested action visible inside the assistant and remove the
+ * obsolete empty composer column left behind when New chat moved to the
+ * header. These rules intentionally come last so they supersede older
+ * responsive experiments without changing chat behaviour.
+ */
+.local_courseaiassistant .course-ai-quick-actions,
+.course-ai-fullpage-view .course-ai-quick-actions,
+.course-ai-chat-box .course-ai-quick-actions {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px 12px !important;
+    overflow: visible !important;
+}
+
+.local_courseaiassistant .course-ai-quick-action,
+.course-ai-fullpage-view .course-ai-quick-action,
+.course-ai-chat-box .course-ai-quick-action {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    text-align: center !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.local_courseaiassistant .course-ai-chat-controls,
+.course-ai-fullpage-view .course-ai-chat-controls,
+.course-ai-chat-box .course-ai-chat-controls {
+    display: grid !important;
+    grid-template-columns: 44px minmax(0, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px 12px 12px !important;
+}
+
+.local_courseaiassistant .course-ai-chat-input,
+.course-ai-fullpage-view .course-ai-chat-input,
+.course-ai-chat-box .course-ai-chat-input {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+}
+
+.local_courseaiassistant .course-ai-mic-button,
+.course-ai-fullpage-view .course-ai-mic-button,
+.course-ai-chat-box .course-ai-mic-button {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    margin: 0 !important;
+}
+
+.local_courseaiassistant .course-ai-send-button,
+.course-ai-fullpage-view .course-ai-send-button,
+.course-ai-chat-box .course-ai-send-button {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+}
+
+@container (max-width: 700px) {
+    .course-ai-quick-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@container (max-width: 360px) {
+    .course-ai-quick-actions {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+}
+
+/*
+ * 2.1.0 RC28 readable responsive layout.
+ *
+ * Never shorten the assistant name or suggested actions. On constrained
+ * assistant widths, the header controls move to their own row and actions
+ * use two complete buttons per row.
+ */
+.local_courseaiassistant .course-ai-modern-header,
+.course-ai-fullpage-view .course-ai-modern-header,
+.course-ai-chat-box .course-ai-modern-header {
+    flex-wrap: wrap !important;
+    height: auto !important;
+}
+
+.local_courseaiassistant .course-ai-header-text,
+.course-ai-fullpage-view .course-ai-header-text,
+.course-ai-chat-box .course-ai-header-text {
+    flex: 1 1 190px !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+}
+
+.local_courseaiassistant .course-ai-header-title,
+.course-ai-fullpage-view .course-ai-header-title,
+.course-ai-chat-box .course-ai-header-title {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    overflow-wrap: normal !important;
+}
+
+.local_courseaiassistant .course-ai-header-actions,
+.course-ai-fullpage-view .course-ai-header-actions,
+.course-ai-chat-box .course-ai-header-actions {
+    flex: 0 1 auto !important;
+    max-width: 100% !important;
+}
+
+.local_courseaiassistant .course-ai-quick-actions,
+.course-ai-fullpage-view .course-ai-quick-actions,
+.course-ai-chat-box .course-ai-quick-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.local_courseaiassistant .course-ai-quick-action,
+.course-ai-fullpage-view .course-ai-quick-action,
+.course-ai-chat-box .course-ai-quick-action {
+    min-height: 42px !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+}
+
+@container (max-width: 360px) {
+    .course-ai-quick-actions {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .course-ai-header-actions {
+        flex-basis: 100% !important;
+        justify-content: space-between !important;
+    }
+}
+
+.course-ai-chat-box.course-ai-placement-button > .course-ai-launcher-button,
+.course-ai-chat-box.course-ai-placement-floating > .course-ai-launcher-button {
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.16) !important;
+}
+
+/* Display configured logos directly; only the default star uses a white tile. */
+.local_courseaiassistant .course-ai-header-star.course-ai-icon-image,
+.local_courseaiassistant .course-ai-assistant-message .course-ai-message-avatar.course-ai-icon-image {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.local_courseaiassistant .course-ai-header-star.course-ai-icon-image img,
+.local_courseaiassistant .course-ai-assistant-message .course-ai-message-avatar.course-ai-icon-image img {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    object-fit: contain !important;
+}

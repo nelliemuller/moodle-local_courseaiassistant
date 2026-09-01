@@ -1,0 +1,456 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+/**
+ * Persistent drawer, drag, and resize behaviour.
+ *
+ * @module    local_courseaiassistant/drawer
+ * @copyright 2026 Nellie Deutsch
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+export const init = () => {
+    const launcher = document.querySelector(
+        '.local-courseaiassistant-edge-launcher'
+    );
+
+    const drawer = document.querySelector(
+        '.local-courseaiassistant-drawer'
+    );
+
+    if (!launcher || !drawer) {
+        return;
+    }
+
+    const placement = launcher.getAttribute('data-courseaiassistant-placement') || 'bottomright';
+
+    const positionTopRightLauncher = () => {
+        if (placement !== 'askgemini') {
+            return;
+        }
+
+        const courseNavigation = document.querySelector('.secondary-navigation');
+        if (courseNavigation) {
+            const navigationBottom = courseNavigation.getBoundingClientRect().bottom;
+            if (navigationBottom > 0 && navigationBottom < window.innerHeight / 2) {
+                launcher.style.setProperty(
+                    '--course-ai-top-right-offset',
+                    Math.ceil(navigationBottom + 12) + 'px'
+                );
+            } else {
+                launcher.style.removeProperty('--course-ai-top-right-offset');
+            }
+        } else {
+            launcher.style.removeProperty('--course-ai-top-right-offset');
+        }
+
+        const rightDrawers = document.querySelectorAll(
+            '#theme_boost-drawers-blocks, .drawer.drawer-right, [data-region="right-hand-drawer"]'
+        );
+        // Reserve the far-right edge for Moodle's block drawer control.
+        let launcherRightOffset = window.innerWidth < 768 ? 64 : 96;
+        let dockedRightOffset = window.innerWidth < 768 ? 0 : 56;
+
+        rightDrawers.forEach(rightDrawer => {
+            const rect = rightDrawer.getBoundingClientRect();
+            const style = window.getComputedStyle(rightDrawer);
+            const isVisible = rect.width > 0 && rect.height > 0 &&
+                rect.left < window.innerWidth && rect.right > window.innerWidth - 2 &&
+                style.display !== 'none' && style.visibility !== 'hidden';
+
+            if (isVisible) {
+                const openDrawerOffset = Math.ceil(window.innerWidth - rect.left + 12);
+                launcherRightOffset = Math.max(launcherRightOffset, openDrawerOffset);
+                dockedRightOffset = Math.max(dockedRightOffset, openDrawerOffset);
+            }
+        });
+
+        launcher.style.setProperty(
+            '--course-ai-top-right-right-offset',
+            launcherRightOffset + 'px'
+        );
+        document.documentElement.style.setProperty(
+            '--course-ai-docked-right-offset',
+            dockedRightOffset + 'px'
+        );
+    };
+
+    positionTopRightLauncher();
+    window.addEventListener('resize', positionTopRightLauncher);
+    if (placement === 'askgemini') {
+        const repositionObserver = new MutationObserver(() => {
+            window.requestAnimationFrame(positionTopRightLauncher);
+        });
+        repositionObserver.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+        document.querySelectorAll(
+            '#theme_boost-drawers-blocks, .drawer.drawer-right, [data-region="right-hand-drawer"]'
+        ).forEach(rightDrawer => {
+            repositionObserver.observe(rightDrawer, {
+                attributes: true,
+                attributeFilter: ['class', 'style', 'aria-hidden']
+            });
+            rightDrawer.addEventListener('transitionend', positionTopRightLauncher);
+        });
+    }
+    if (placement === 'courseheader' || placement === 'fullpage') {
+        const header = document.querySelector('.page-header-headings') ||
+            document.querySelector('#page-header .d-flex') ||
+            document.querySelector('#page-header');
+        if (header) {
+            header.appendChild(launcher);
+        } else {
+            launcher.classList.remove('is-courseheader', 'is-fullpage');
+            launcher.classList.add('is-bottomright');
+        }
+    }
+
+    if (placement === 'fullpage') {
+        drawer.remove();
+        return;
+    }
+
+    const closeButton = drawer.querySelector(
+        '.local-courseaiassistant-drawer-close'
+    );
+    const popoutButton = drawer.querySelector(
+        '.local-courseaiassistant-drawer-popout'
+    );
+    const utilityBar = drawer.querySelector(
+        '.local-courseaiassistant-drawer-top'
+    );
+    const headerControls = drawer.querySelector(
+        '.course-ai-header-controls'
+    );
+    const dragBar = drawer.querySelector(
+        '.course-ai-modern-header'
+    );
+    const resizeHandle = document.createElement('div');
+    resizeHandle.className = 'local-courseaiassistant-resize-handle';
+    resizeHandle.setAttribute('role', 'separator');
+    resizeHandle.setAttribute('aria-label', 'Resize AI Course Assistant');
+    resizeHandle.setAttribute('title', 'Drag to resize');
+    drawer.appendChild(resizeHandle);
+
+    if (headerControls) {
+        if (popoutButton) {
+            headerControls.appendChild(popoutButton);
+        }
+        if (closeButton) {
+            headerControls.appendChild(closeButton);
+        }
+    }
+    if (utilityBar) {
+        utilityBar.remove();
+    }
+
+    /*
+     * The embedded assistant owns its own collapse state.
+     * The universal drawer follows that state instead of
+     * maintaining a second independent minimize system.
+     */
+    const chatBox = drawer.querySelector(
+        '.course-ai-chat-box'
+    );
+    const courseId = chatBox ? chatBox.getAttribute('data-courseid') || '0' : '0';
+    const windowStateKey = 'local_courseaiassistant_window_' + courseId;
+
+    const readWindowState = () => {
+        try {
+            return JSON.parse(window.localStorage.getItem(windowStateKey) || 'null');
+        } catch (error) {
+            return null;
+        }
+    };
+
+    const saveWindowState = mode => {
+        const state = {open: true, mode: mode};
+        if (mode === 'floating') {
+            const rect = drawer.getBoundingClientRect();
+            state.left = Math.round(rect.left);
+            state.top = Math.round(rect.top);
+            state.width = Math.round(rect.width);
+            state.height = Math.round(rect.height);
+        }
+        try {
+            window.localStorage.setItem(windowStateKey, JSON.stringify(state));
+        } catch (error) {
+            // The assistant still works when private browsing blocks storage.
+        }
+    };
+
+    const updatePopoutControl = floating => {
+        if (!popoutButton) {
+            return;
+        }
+        const label = popoutButton.getAttribute(floating ? 'data-dock-label' : 'data-popout-label');
+        if (label) {
+            popoutButton.setAttribute('aria-label', label);
+            popoutButton.setAttribute('title', label);
+        }
+        popoutButton.setAttribute('aria-pressed', floating ? 'true' : 'false');
+    };
+
+    const syncMinimizedState = () => {
+        const minimized =
+            chatBox &&
+            chatBox.classList.contains('course-ai-collapsed');
+
+        drawer.classList.toggle(
+            'is-minimized',
+            Boolean(minimized)
+        );
+    };
+
+    if (chatBox) {
+        syncMinimizedState();
+
+        const observer = new MutationObserver(() => {
+            syncMinimizedState();
+        });
+
+        observer.observe(chatBox, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
+
+    const openDrawer = (persist = true, mode = 'docked') => {
+        if (placement === 'askgemini') {
+            drawer.classList.toggle('is-docked-right', mode !== 'floating');
+            document.body.classList.toggle('local-courseaiassistant-docked-right', mode !== 'floating');
+        }
+        drawer.classList.toggle('is-popped-out', mode === 'floating');
+        drawer.classList.add('is-open');
+        drawer.setAttribute('aria-hidden', 'false');
+        launcher.setAttribute('aria-expanded', 'true');
+        document.body.classList.add(
+            'local-courseaiassistant-drawer-open'
+        );
+        updatePopoutControl(mode === 'floating');
+        if (persist) {
+            saveWindowState(mode);
+        }
+    };
+
+    const closeDrawer = () => {
+        drawer.classList.remove('is-open');
+        drawer.setAttribute('aria-hidden', 'true');
+        launcher.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove(
+            'local-courseaiassistant-drawer-open'
+        );
+        document.body.classList.remove('local-courseaiassistant-docked-right');
+        drawer.classList.remove('is-popped-out');
+        drawer.style.removeProperty('--course-ai-drawer-left');
+        drawer.style.removeProperty('--course-ai-drawer-top');
+        drawer.style.removeProperty('--course-ai-drawer-width');
+        drawer.style.removeProperty('--course-ai-drawer-height');
+        updatePopoutControl(false);
+        try {
+            window.localStorage.removeItem(windowStateKey);
+        } catch (error) {
+            // The drawer is already closed in the current page.
+        }
+    };
+
+    launcher.addEventListener('click', () => {
+        openDrawer();
+    });
+
+    if (closeButton) {
+        closeButton.addEventListener('click', closeDrawer);
+    }
+
+    const margin = 12;
+    let drag = null;
+    let resize = null;
+
+    const setFloatingSize = (width, height) => {
+        const rect = drawer.getBoundingClientRect();
+        const maximumWidth = Math.max(360, window.innerWidth - rect.left - margin);
+        const maximumHeight = Math.max(420, window.innerHeight - rect.top - margin);
+        const safeWidth = Math.max(360, Math.min(width, maximumWidth));
+        const safeHeight = Math.max(420, Math.min(height, maximumHeight));
+        drawer.style.setProperty('--course-ai-drawer-width', Math.round(safeWidth) + 'px');
+        drawer.style.setProperty('--course-ai-drawer-height', Math.round(safeHeight) + 'px');
+    };
+
+    const setFloatingPosition = (left, top) => {
+        const rect = drawer.getBoundingClientRect();
+        const safeLeft = Math.max(margin, Math.min(left, window.innerWidth - rect.width - margin));
+        const safeTop = Math.max(margin, Math.min(top, window.innerHeight - rect.height - margin));
+        drawer.style.setProperty('--course-ai-drawer-left', safeLeft + 'px');
+        drawer.style.setProperty('--course-ai-drawer-top', safeTop + 'px');
+    };
+
+    if (popoutButton) {
+        popoutButton.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+            const floating = drawer.classList.contains('is-popped-out');
+            if (floating) {
+                drawer.classList.remove('is-popped-out');
+                drawer.classList.toggle('is-docked-right', placement === 'askgemini');
+                document.body.classList.toggle(
+                    'local-courseaiassistant-docked-right',
+                    placement === 'askgemini'
+                );
+                drawer.style.removeProperty('--course-ai-drawer-left');
+                drawer.style.removeProperty('--course-ai-drawer-top');
+                drawer.style.removeProperty('--course-ai-drawer-width');
+                drawer.style.removeProperty('--course-ai-drawer-height');
+                updatePopoutControl(false);
+                saveWindowState('docked');
+                return;
+            }
+
+            const rect = drawer.getBoundingClientRect();
+            drawer.classList.remove('is-docked-right');
+            document.body.classList.remove('local-courseaiassistant-docked-right');
+            drawer.classList.add('is-popped-out');
+            setFloatingSize(Math.min(560, window.innerWidth - margin * 2), Math.min(720, window.innerHeight - margin * 2));
+            setFloatingPosition(rect.left, Math.max(margin, rect.top));
+            updatePopoutControl(true);
+            saveWindowState('floating');
+        });
+    }
+
+    const dockRequestKey = 'local_courseaiassistant_dock_' + courseId;
+    const acceptDockRequest = () => {
+        try {
+            if (!window.localStorage.getItem(dockRequestKey)) {
+                return;
+            }
+            window.localStorage.removeItem(dockRequestKey);
+        } catch (error) {
+            return;
+        }
+        openDrawer();
+    };
+
+    window.addEventListener('storage', event => {
+        if (event.key === dockRequestKey && event.newValue) {
+            acceptDockRequest();
+        }
+    });
+
+    acceptDockRequest();
+
+    if (dragBar) {
+        dragBar.addEventListener('pointerdown', event => {
+            if (!drawer.classList.contains('is-popped-out') ||
+                    event.button !== 0 || event.target.closest('button, a, input, textarea, select')) {
+                return;
+            }
+            const rect = drawer.getBoundingClientRect();
+            drag = {
+                pointerId: event.pointerId,
+                offsetX: event.clientX - rect.left,
+                offsetY: event.clientY - rect.top
+            };
+            dragBar.setPointerCapture(event.pointerId);
+            event.preventDefault();
+        });
+
+        dragBar.addEventListener('pointermove', event => {
+            if (!drag || drag.pointerId !== event.pointerId) {
+                return;
+            }
+            setFloatingPosition(event.clientX - drag.offsetX, event.clientY - drag.offsetY);
+        });
+
+        const endDrag = event => {
+            if (drag && drag.pointerId === event.pointerId) {
+                drag = null;
+                saveWindowState('floating');
+            }
+        };
+        dragBar.addEventListener('pointerup', endDrag);
+        dragBar.addEventListener('pointercancel', endDrag);
+    }
+
+    resizeHandle.addEventListener('pointerdown', event => {
+        if (!drawer.classList.contains('is-popped-out') || event.button !== 0) {
+            return;
+        }
+        const rect = drawer.getBoundingClientRect();
+        resize = {
+            pointerId: event.pointerId,
+            startX: event.clientX,
+            startY: event.clientY,
+            width: rect.width,
+            height: rect.height
+        };
+        resizeHandle.setPointerCapture(event.pointerId);
+        event.preventDefault();
+        event.stopPropagation();
+    });
+
+    resizeHandle.addEventListener('pointermove', event => {
+        if (!resize || resize.pointerId !== event.pointerId) {
+            return;
+        }
+        setFloatingSize(
+            resize.width + event.clientX - resize.startX,
+            resize.height + event.clientY - resize.startY
+        );
+    });
+
+    const endResize = event => {
+        if (resize && resize.pointerId === event.pointerId) {
+            resize = null;
+            saveWindowState('floating');
+        }
+    };
+    resizeHandle.addEventListener('pointerup', endResize);
+    resizeHandle.addEventListener('pointercancel', endResize);
+
+    window.addEventListener('resize', () => {
+        if (drawer.classList.contains('is-popped-out')) {
+            const rect = drawer.getBoundingClientRect();
+            setFloatingPosition(rect.left, rect.top);
+            saveWindowState('floating');
+        }
+    });
+
+    window.addEventListener('pagehide', () => {
+        if (!drawer.classList.contains('is-open')) {
+            return;
+        }
+        saveWindowState(drawer.classList.contains('is-popped-out') ? 'floating' : 'docked');
+    });
+
+    const savedWindowState = readWindowState();
+    if (savedWindowState && savedWindowState.open) {
+        const savedMode = savedWindowState.mode === 'floating' ? 'floating' : 'docked';
+        drawer.classList.add('is-restoring');
+        openDrawer(false, savedMode);
+        if (savedMode === 'floating') {
+            setFloatingSize(
+                Number(savedWindowState.width) || Math.min(560, window.innerWidth - margin * 2),
+                Number(savedWindowState.height) || Math.min(720, window.innerHeight - margin * 2)
+            );
+            setFloatingPosition(
+                Number(savedWindowState.left) || margin,
+                Number(savedWindowState.top) || margin
+            );
+        }
+        window.requestAnimationFrame(() => {
+            drawer.classList.remove('is-restoring');
+        });
+        saveWindowState(savedMode);
+    }
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            closeDrawer();
+        }
+    });
+};

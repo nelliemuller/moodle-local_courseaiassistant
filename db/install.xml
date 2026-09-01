@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/courseaiassistant/db"
+       VERSION="2026082612"
+       COMMENT="XMLDB file for local_courseaiassistant"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+
+  <TABLES>
+
+    <TABLE NAME="local_courseaiassistant_conv"
+           COMMENT="Saved AI Course Assistant conversations">
+
+      <FIELDS>
+        <FIELD NAME="id"
+               TYPE="int"
+               LENGTH="10"
+               NOTNULL="true"
+               SEQUENCE="true"/>
+
+        <FIELD NAME="userid"
+               TYPE="int"
+               LENGTH="10"
+               NOTNULL="true"
+               DEFAULT="0"/>
+
+        <FIELD NAME="courseid"
+               TYPE="int"
+               LENGTH="10"
+               NOTNULL="true"
+               DEFAULT="0"/>
+
+        <FIELD NAME="title"
+               TYPE="char"
+               LENGTH="255"
+               NOTNULL="true"
+               DEFAULT=""/>
+
+        <FIELD NAME="timecreated"
+               TYPE="int"
+               LENGTH="10"
+               NOTNULL="true"
+               DEFAULT="0"/>
+
+        <FIELD NAME="timemodified"
+               TYPE="int"
+               LENGTH="10"
+               NOTNULL="true"
+               DEFAULT="0"/>
+      </FIELDS>
+
+      <KEYS>
+        <KEY NAME="primary"
+             TYPE="primary"
+             FIELDS="id"/>
+      </KEYS>
+
+      <INDEXES>
+        <INDEX NAME="usercourse"
+               UNIQUE="false"
+               FIELDS="userid,courseid"/>
+      </INDEXES>
+
+    </TABLE>
+
+
+    <TABLE NAME="local_courseaiassistant_msg"
+           COMMENT="Messages in saved AI Course Assistant conversations">
+
+      <FIELDS>
+        <FIELD NAME="id"
+               TYPE="int"
+               LENGTH="10"
+               NOTNULL="true"
+               SEQUENCE="true"/>
+
+        <FIELD NAME="conversationid"
+               TYPE="int"
+               LENGTH="10"
+               NOTNULL="true"
+               DEFAULT="0"/>
+
+        <FIELD NAME="role"
+               TYPE="char"
+               LENGTH="20"
+               NOTNULL="true"
+               DEFAULT="user"/>
+
+        <FIELD NAME="message"
+               TYPE="text"
+               NOTNULL="true"/>
+
+        <FIELD NAME="contextjson"
+               TYPE="text"
+               NOTNULL="false"/>
+
+        <FIELD NAME="timecreated"
+               TYPE="int"
+               LENGTH="10"
+               NOTNULL="true"
+               DEFAULT="0"/>
+      </FIELDS>
+
+      <KEYS>
+        <KEY NAME="primary"
+             TYPE="primary"
+             FIELDS="id"/>
+
+        <KEY NAME="conversationfk"
+             TYPE="foreign"
+             FIELDS="conversationid"
+             REFTABLE="local_courseaiassistant_conv"
+             REFFIELDS="id"/>
+      </KEYS>
+
+
+    </TABLE>
+
+  </TABLES>
+
+</XMLDB>
