@@ -16,14 +16,6 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 
-/**
- * Dedicated AI Course Assistant page.
- *
- * @package   local_courseaiassistant
- * @copyright 2026 Nellie Deutsch
- * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 require_once(__DIR__ . '/../../config.php');
 
 $courseid = required_param('courseid', PARAM_INT);
@@ -56,17 +48,7 @@ $PAGE->add_body_class($popup ? 'local-courseaiassistant-popup-page' : 'local-cou
 $PAGE->set_title($assistantname . ' — ' . format_string($course->fullname));
 $PAGE->set_heading(format_string($course->fullname));
 if ($popup) {
-    // Move the assistant to the body root after Moodle finishes rendering.
-    // This prevents theme and Additional HTML stacking contexts from placing
-    // unrelated site-wide controls above the dedicated pop-out interface.
-    $PAGE->requires->js_init_code(
-        '(function() {' .
-            'var assistant = document.querySelector(".course-ai-fullpage-view");' .
-            'if (assistant && assistant.parentNode !== document.body) {' .
-                'document.body.appendChild(assistant);' .
-            '}' .
-        '})();'
-    );
+    $PAGE->requires->js_call_amd('local_courseaiassistant/popup', 'init');
 }
 
 print $OUTPUT->header();

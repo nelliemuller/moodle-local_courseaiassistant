@@ -50,8 +50,7 @@ The interface provides keyboard-operable controls, accessible labels, focus hand
 
 ## Support and development
 
-* Source code and documentation: https://github.com/nelliemuller/moodle-local_courseaiassistant
-* Issue tracker: https://github.com/nelliemuller/moodle-local_courseaiassistant/issues
+A public source-code repository, issue tracker, and documentation URL must be added to the Moodle Marketplace listing before submission.
 
 ## License
 

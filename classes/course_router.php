@@ -16,14 +16,6 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 
-/**
- * Course request routing.
- *
- * @package   local_courseaiassistant
- * @copyright 2026 Nellie Deutsch
- * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace local_courseaiassistant;
 
 defined('MOODLE_INTERNAL') || die();
@@ -1057,8 +1049,12 @@ TEXT;
      * Never infer that an activity is complete from course prose or AI output.
      */
     private function guided_progress_answer(string $mode, array $history = []): array {
-        $progress = $this->agentcontext['progress'] ?? [];
-        $progressactivities = $progress['activities'] ?? [];
+        $progress = is_array($this->agentcontext['progress'] ?? null)
+            ? $this->agentcontext['progress']
+            : [];
+        $progressactivities = is_array($progress['activities'] ?? null)
+            ? $progress['activities']
+            : [];
         $bycmid = [];
 
         foreach ($progressactivities as $activity) {
@@ -1068,17 +1064,26 @@ TEXT;
             }
         }
 
-        // The course index is already in Moodle display order. Start guidance selects the
-        // first verified incomplete tracked activity. Next guidance advances from the most
-        // recently presented activity in the conversation instead of repeating it forever.
+        // The course index is already in Moodle display order. Use every visible indexed
+        // course module as navigation context, including resources without completion tracking.
+        // Completion state is used when Moodle provides it, but an untracked resource must not
+        // disappear from Start or What's Next simply because another activity is tracked.
+        $items = is_array($this->index['items'] ?? null)
+            ? $this->index['items']
+            : [];
+
         $startaftercmid = 0;
         if ($mode === 'next') {
             for ($i = count($history) - 1; $i >= 0; $i--) {
                 if (!is_array($history[$i])) {
                     continue;
                 }
-                $historycontext = is_array($history[$i]['context'] ?? null) ? $history[$i]['context'] : [];
+
+                $historycontext = is_array($history[$i]['context'] ?? null)
+                    ? $history[$i]['context']
+                    : [];
                 $historycmid = (int)($historycontext['cmid'] ?? 0);
+
                 if ($historycmid > 0) {
                     $startaftercmid = $historycmid;
                     break;
@@ -1087,8 +1092,19 @@ TEXT;
         }
 
         $aftercurrent = $startaftercmid === 0;
-        foreach ($this->index['items'] as $item) {
+
+        foreach ($items as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
             $cmid = (int)($item['cmid'] ?? 0);
+            $name = trim((string)($item['name'] ?? ''));
+            $url = trim((string)($item['url'] ?? ''));
+
+            if ($cmid <= 0 || $name === '') {
+                continue;
+            }
 
             if ($mode === 'next' && !$aftercurrent) {
                 if ($cmid === $startaftercmid) {
@@ -1097,12 +1113,19 @@ TEXT;
                 continue;
             }
 
-            if ($cmid <= 0 || !isset($bycmid[$cmid]) || !empty($bycmid[$cmid]['complete'])) {
+            $tracked = isset($bycmid[$cmid]);
+            $complete = $tracked && !empty($bycmid[$cmid]['complete']);
+
+            // A tracked completed activity is not the learner's next unfinished task.
+            // Untracked resources remain valid navigation steps because Moodle does not
+            // provide completion evidence that would justify skipping them.
+            if ($complete) {
                 continue;
             }
 
-            $name = trim((string)($item['name'] ?? $bycmid[$cmid]['name'] ?? 'Next activity'));
-            $url = trim((string)($item['url'] ?? $bycmid[$cmid]['url'] ?? ''));
+            if ($url === '' && $tracked) {
+                $url = trim((string)($bycmid[$cmid]['url'] ?? ''));
+            }
 
             $displayname = $url !== ''
                 ? '[' . str_replace(['[', ']'], ['(', ')'], $name) . '](' . $url . ')'
@@ -1111,30 +1134,40 @@ TEXT;
             $reply = $mode === 'next'
                 ? 'Next, go to ' . $displayname . '.'
                 : 'Start with ' . $displayname . '.';
+
             if ($mode === 'start') {
-                $reply .= "
-When you finish, ask me what's next.";
+                $reply .= "\nWhen you finish, ask me what's next.";
             }
 
-            return $this->payload($reply, 'course', 'activity', $mode === 'next' ? 'next' : 'start', [
-                'cmid' => $cmid,
-                'verifiedcompletion' => true,
-            ]);
-        }
-
-        // If next guidance had a recent activity context but there is no later incomplete
-        // tracked activity, do not wrap back to the first activity.
-        if ($mode === 'next' && $startaftercmid > 0) {
             return $this->payload(
-                'There is no later incomplete completion-tracked activity currently visible after that one.',
+                $reply,
                 'course',
-                'progress',
-                'next',
-                ['cmid' => $startaftercmid, 'verifiedcompletion' => true]
+                'activity',
+                $mode === 'next' ? 'next' : 'start',
+                [
+                    'cmid' => $cmid,
+                    'verifiedcompletion' => $tracked,
+                ]
             );
         }
 
-        // If Moodle tracks activities and none are incomplete, that is a verified conclusion.
+        // If Next followed a known course item and there is no later eligible visible item,
+        // do not wrap around to the beginning of the course.
+        if ($mode === 'next' && $startaftercmid > 0) {
+            return $this->payload(
+                'I could not identify another visible course activity or resource after that one.',
+                'course',
+                'progress',
+                'next',
+                [
+                    'cmid' => $startaftercmid,
+                    'verifiedcompletion' => false,
+                ]
+            );
+        }
+
+        // If completion tracking verifies that every tracked activity is complete, report
+        // that fact without claiming that untracked course resources were completed.
         if ((int)($progress['trackedactivities'] ?? 0) > 0) {
             return $this->payload(
                 'You have completed all completion-tracked activities currently visible in this course.',
@@ -1145,27 +1178,11 @@ When you finish, ask me what's next.";
             );
         }
 
-        // Without Moodle completion state, do not invent progress. Give the first visible
-        // course item as orientation and explicitly avoid claiming it is incomplete/completed.
-        foreach ($this->index['items'] as $item) {
-            $name = trim((string)($item['name'] ?? ''));
-            $url = trim((string)($item['url'] ?? ''));
-            if ($name === '') {
-                continue;
-            }
-            $displayname = $url !== ''
-                ? '[' . str_replace(['[', ']'], ['(', ')'], $name) . '](' . $url . ')'
-                : $name;
-
-            $reply = 'Moodle completion tracking does not establish your progress here. Start with ' . $displayname . '.';
-            return $this->payload($reply, 'course', 'activity', 'start', ['verifiedcompletion' => false]);
-        }
-
         return $this->payload(
-            'I could not identify a visible starting activity from the course information available to me.',
+            'I could not identify a visible starting activity or resource from the course information available to me.',
             'course',
             'activity',
-            'start',
+            $mode === 'next' ? 'next' : 'start',
             ['verifiedcompletion' => false]
         );
     }

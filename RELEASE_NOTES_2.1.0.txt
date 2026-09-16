@@ -19,13 +19,3 @@ AI Course Assistant 2.1.0
 • Shows every quick-action label in full using a readable two-column layout.
 • Allows header controls to wrap safely on constrained assistant widths.
 • Adds drag resizing for the floating assistant and remembers its size and position.
-2.1.0
-=====
-
-Stable Moodle Marketplace release based on the approved RC28 interface.
-
-• Complete responsive title and quick-action labels.
-• Movable and resizable floating assistant with saved size and position.
-• Course-aware guidance, conversation history, speech input, and read aloud.
-• Configurable Gemini or OpenAI provider and assistant branding.
-• Moodle Privacy API and capability-aware access controls.

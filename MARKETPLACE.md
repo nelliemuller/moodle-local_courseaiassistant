@@ -38,10 +38,13 @@ AI-provider accounts, usage allowances, and API charges are not included.
 
 To produce a response, the plugin may send the user's question, recent conversation context, relevant course information visible to that user, role and capability context, and progress information to the AI provider selected by the site administrator. OpenAI requests also include a one-way pseudonymous safety identifier. Saved conversations remain in Moodle and are covered by Moodle's Privacy API.
 
-## Public links
+## Before submission
 
-* Source-code repository: https://github.com/nelliemuller/moodle-local_courseaiassistant
-* Issue tracker: https://github.com/nelliemuller/moodle-local_courseaiassistant/issues
-* User and administrator documentation: https://github.com/nelliemuller/moodle-local_courseaiassistant#readme
+Replace the following entries in the Marketplace form with public URLs:
+
+* Source-code repository
+* Issue tracker
+* User and administrator documentation
 
 Upload screenshots showing the closed launcher, open course drawer, assistant settings, icon choices, and a mobile layout.
+

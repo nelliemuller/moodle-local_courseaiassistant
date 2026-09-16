@@ -947,6 +947,31 @@ export const init = () => {
     }
 
     document.addEventListener('click', function (event) {
+        var courseLink = event.target.closest('a.course-ai-link');
+        if (courseLink) {
+            var isPhone =
+                /iPhone|iPod|Android.*Mobile|Windows Phone/i.test(
+                    navigator.userAgent
+                );
+
+            var isSameSite =
+                courseLink.origin === window.location.origin;
+
+            if (isPhone && isSameSite) {
+                event.preventDefault();
+
+                var courseLinkBox =
+                    courseLink.closest('.course-ai-chat-box');
+
+                if (courseLinkBox) {
+                    setLauncherState(courseLinkBox, false);
+                }
+
+                window.location.href = courseLink.href;
+                return;
+            }
+        }
+
         var popupDockButton = event.target.closest('.course-ai-popup-dock-button');
         if (popupDockButton) {
             event.preventDefault();

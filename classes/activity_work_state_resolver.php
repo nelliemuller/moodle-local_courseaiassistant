@@ -397,6 +397,29 @@ final class activity_work_state_resolver {
                 $grade;
         }
 
+        $userids = [];
+        foreach ($submissions as $submission) {
+            $userid =
+                (int)$submission->userid;
+
+            if ($userid > 0) {
+                $userids[$userid] =
+                    $userid;
+            }
+        }
+
+        $assignmentusers = [];
+        if ($userids) {
+            $assignmentusers =
+                $DB->get_records_list(
+                    'user',
+                    'id',
+                    array_values($userids),
+                    '',
+                    'id,firstname,lastname'
+                );
+        }
+
         $users = [];
 
         foreach ($submissions as $submission) {
@@ -408,15 +431,8 @@ final class activity_work_state_resolver {
             }
 
             $user =
-                $DB->get_record(
-                    'user',
-                    [
-                        'id' =>
-                            $userid,
-                    ],
-                    'id,firstname,lastname',
-                    IGNORE_MISSING
-                );
+                $assignmentusers[$userid]
+                ?? null;
 
             $grade =
                 $grademap[$userid]
@@ -685,6 +701,29 @@ final class activity_work_state_resolver {
                 'userid ASC, attempt ASC'
             );
 
+        $userids = [];
+        foreach ($attempts as $attempt) {
+            $userid =
+                (int)$attempt->userid;
+
+            if ($userid > 0) {
+                $userids[$userid] =
+                    $userid;
+            }
+        }
+
+        $quizusers = [];
+        if ($userids) {
+            $quizusers =
+                $DB->get_records_list(
+                    'user',
+                    'id',
+                    array_values($userids),
+                    '',
+                    'id,firstname,lastname'
+                );
+        }
+
         $users = [];
 
         foreach ($attempts as $attempt) {
@@ -692,15 +731,8 @@ final class activity_work_state_resolver {
                 (int)$attempt->userid;
 
             $user =
-                $DB->get_record(
-                    'user',
-                    [
-                        'id' =>
-                            $userid,
-                    ],
-                    'id,firstname,lastname',
-                    IGNORE_MISSING
-                );
+                $quizusers[$userid]
+                ?? null;
 
             $state =
                 (string)(

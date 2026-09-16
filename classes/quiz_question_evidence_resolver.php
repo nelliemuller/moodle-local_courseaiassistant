@@ -316,6 +316,29 @@ final class quiz_question_evidence_resolver {
                 'userid ASC, attempt ASC'
             );
 
+        $userids = [];
+        foreach ($attempts as $attempt) {
+            $userid =
+                (int)$attempt->userid;
+
+            if ($userid > 0) {
+                $userids[$userid] =
+                    $userid;
+            }
+        }
+
+        $quizusers = [];
+        if ($userids) {
+            $quizusers =
+                $DB->get_records_list(
+                    'user',
+                    'id',
+                    array_values($userids),
+                    '',
+                    'id,firstname,lastname'
+                );
+        }
+
         $questionlower =
             \core_text::strtolower(
                 $question
@@ -327,7 +350,7 @@ final class quiz_question_evidence_resolver {
          */
         $nameduserid =
             $this->named_userid(
-                $attempts,
+                $quizusers,
                 $questionlower
             );
 
@@ -345,15 +368,8 @@ final class quiz_question_evidence_resolver {
             }
 
             $user =
-                $DB->get_record(
-                    'user',
-                    [
-                        'id' =>
-                            $userid,
-                    ],
-                    'id,firstname,lastname',
-                    IGNORE_MISSING
-                );
+                $quizusers[$userid]
+                ?? null;
 
             if (!$user) {
                 continue;
@@ -712,43 +728,17 @@ final class quiz_question_evidence_resolver {
     /**
      * Narrow by exact participant full name when possible.
      *
-     * @param array<int, \stdClass> $attempts
+     * @param array<int, \stdClass> $users
      * @param string $questionlower
      * @return int
      */
     private function named_userid(
-        array $attempts,
+        array $users,
         string $questionlower
     ): int {
-        global $DB;
-
-        $userids = [];
-
-        foreach ($attempts as $attempt) {
+        foreach ($users as $userid => $user) {
             $userid =
-                (int)$attempt->userid;
-
-            if ($userid > 0) {
-                $userids[$userid] =
-                    $userid;
-            }
-        }
-
-        foreach ($userids as $userid) {
-            $user =
-                $DB->get_record(
-                    'user',
-                    [
-                        'id' =>
-                            $userid,
-                    ],
-                    'id,firstname,lastname',
-                    IGNORE_MISSING
-                );
-
-            if (!$user) {
-                continue;
-            }
+                (int)$userid;
 
             $fullname =
                 \core_text::strtolower(

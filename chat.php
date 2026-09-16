@@ -16,14 +16,6 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 
-/**
- * AI Course Assistant response endpoint.
- *
- * @package   local_courseaiassistant
- * @copyright 2026 Nellie Deutsch
- * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 require_once(__DIR__ . '/../../config.php');
 
 require_login();
@@ -51,18 +43,32 @@ foreach (array_slice($rawhistory, -20) as $historyitem) {
         continue;
     }
 
-    $type = ($historyitem['type'] ?? '') === 'assistant' ? 'assistant' : 'user';
-    $text = trim((string)($historyitem['text'] ?? ''));
+    $historyrole = (string)($historyitem['role'] ?? $historyitem['type'] ?? '');
+    $type = $historyrole === 'assistant' ? 'assistant' : 'user';
+    $text = trim((string)($historyitem['content'] ?? $historyitem['text'] ?? ''));
     if ($text === '') {
         continue;
     }
     if (core_text::strlen($text) > 4000) {
         $text = core_text::substr($text, 0, 4000);
     }
-    $history[] = [
+    $cleanhistoryitem = [
         'type' => $type,
         'text' => $text,
     ];
+
+    $historycontext = is_array($historyitem['context'] ?? null)
+        ? $historyitem['context']
+        : [];
+    $cmid = (int)($historycontext['cmid'] ?? 0);
+
+    if ($cmid > 0) {
+        $cleanhistoryitem['context'] = [
+            'cmid' => $cmid,
+        ];
+    }
+
+    $history[] = $cleanhistoryitem;
 }
 $pagecontext = [
     'pageurl' => clean_param((string)($data['pageurl'] ?? ''), PARAM_URL),

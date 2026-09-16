@@ -16,14 +16,6 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 
-/**
- * Saved conversation history endpoint.
- *
- * @package   local_courseaiassistant
- * @copyright 2026 Nellie Deutsch
- * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 require_once(__DIR__ . '/../../config.php');
 require_login();
 header('Content-Type: application/json; charset=utf-8');

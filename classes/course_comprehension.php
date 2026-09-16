@@ -16,14 +16,6 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 
-/**
- * Course comprehension services.
- *
- * @package   local_courseaiassistant
- * @copyright 2026 Nellie Deutsch
- * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace local_courseaiassistant;
 
 defined('MOODLE_INTERNAL') || die();
@@ -552,14 +544,14 @@ class course_comprehension {
             if (!is_array($entry)) {
                 continue;
             }
-            $role = (string)($entry['role'] ?? '');
+            $role = (string)($entry['role'] ?? $entry['type'] ?? '');
             if (!in_array($role, ['user', 'assistant'], true)) {
                 continue;
             }
             $out[] = [
                 'role' => $role,
                 'content' => $this->clean(
-                    (string)($entry['content'] ?? ''),
+                    (string)($entry['content'] ?? $entry['text'] ?? ''),
                     2500
                 ),
 

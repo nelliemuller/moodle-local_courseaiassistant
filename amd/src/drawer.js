@@ -1,18 +1,3 @@
-// This file is part of Moodle - http://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-
-/**
- * Persistent drawer, drag, and resize behaviour.
- *
- * @module    local_courseaiassistant/drawer
- * @copyright 2026 Nellie Deutsch
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 export const init = () => {
     const launcher = document.querySelector(
         '.local-courseaiassistant-edge-launcher'
@@ -27,6 +12,65 @@ export const init = () => {
     }
 
     const placement = launcher.getAttribute('data-courseaiassistant-placement') || 'bottomright';
+
+    /*
+     * Add a separate close control for the floating launcher.
+     * This hides the launcher without opening the assistant.
+     */
+    let launcherCloseButton = null;
+
+    const positionLauncherClose = () => {
+        if (!launcherCloseButton || !document.body.contains(launcherCloseButton)) {
+            return;
+        }
+
+        const rect = launcher.getBoundingClientRect();
+
+        launcherCloseButton.style.left = (rect.right - 58) + 'px';
+        launcherCloseButton.style.top = (rect.top + ((rect.height - 36) / 2)) + 'px';
+    };
+
+    const hideLauncher = event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        launcher.style.setProperty('display', 'none', 'important');
+
+        if (launcherCloseButton) {
+            launcherCloseButton.style.setProperty('display', 'none', 'important');
+        }
+    };
+
+    const addLauncherClose = () => {
+        if (placement === 'fullpage') {
+            return;
+        }
+
+        launcher.style.setProperty('padding-left', '18px', 'important');
+        launcher.style.setProperty('padding-right', '78px', 'important');
+
+        launcherCloseButton = document.createElement('button');
+        launcherCloseButton.type = 'button';
+        launcherCloseButton.className = 'local-courseaiassistant-launcher-close';
+        launcherCloseButton.innerHTML = '&times;';
+        launcherCloseButton.setAttribute('aria-label', 'Hide AI Course Assistant');
+        launcherCloseButton.setAttribute('title', 'Hide AI Course Assistant');
+
+        document.body.appendChild(launcherCloseButton);
+
+        launcherCloseButton.addEventListener('click', hideLauncher);
+
+        window.requestAnimationFrame(() => {
+            positionLauncherClose();
+            window.requestAnimationFrame(positionLauncherClose);
+        });
+
+        window.addEventListener('resize', positionLauncherClose);
+        window.addEventListener('scroll', positionLauncherClose, true);
+        window.addEventListener('load', positionLauncherClose);
+    };
+
+    addLauncherClose();
 
     const positionTopRightLauncher = () => {
         if (placement !== 'askgemini') {

@@ -32,8 +32,7 @@
         <FIELD NAME="title"
                TYPE="char"
                LENGTH="255"
-               NOTNULL="true"
-               DEFAULT=""/>
+               NOTNULL="true"/>
 
         <FIELD NAME="timecreated"
                TYPE="int"

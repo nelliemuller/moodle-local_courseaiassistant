@@ -16,14 +16,6 @@
 // along with Moodle. If not, see <https://www.gnu.org/licenses/>.
 
 
-/**
- * Conversation download endpoint.
- *
- * @package   local_courseaiassistant
- * @copyright 2026 Nellie Deutsch
- * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 require_once(__DIR__ . '/../../config.php');
 require_login();
 header('X-Content-Type-Options: nosniff');
@@ -44,13 +36,40 @@ $filename = clean_filename($conv->title ?: 'course-conversation');
 if ($format === 'html') {
     header('Content-Type: text/html; charset=utf-8');
     header('Content-Disposition: attachment; filename="' . $filename . '.html"');
-    echo '<!doctype html><html><head><meta charset="utf-8"><title>' . s($conv->title) . '</title></head><body>';
-    echo '<h1>' . s($conv->title) . '</h1><p>' . s(format_string($course->fullname)) . '</p>';
+
+    $templatemessages = [];
     foreach ($messages as $message) {
-        echo '<h2>' . ($message->role === 'assistant' ? get_string('pluginname', 'local_courseaiassistant') : fullname($USER)) . '</h2>';
-        echo '<p>' . nl2br(s($message->message)) . '</p>';
+        $safe_message = s($message->message);
+
+        $safe_message = preg_replace_callback(
+            '/\\[([^\\]]+)\\]\\((https?:\\/\\/[^\\s\\)]+)\\)/',
+            function ($match) {
+                return '<a href="' . $match[2] . '" target="_blank" rel="noopener noreferrer">'
+                    . $match[1] . '</a>';
+            },
+            $safe_message
+        );
+
+        $templatemessages[] = [
+            'author' => s(
+                $message->role === 'assistant'
+                    ? get_string('pluginname', 'local_courseaiassistant')
+                    : fullname($USER)
+            ),
+            'message' => nl2br($safe_message),
+        ];
     }
-    echo '</body></html>';
+
+    $templatedata = [
+        'title' => $conv->title,
+        'coursename' => format_string($course->fullname),
+        'messages' => $templatemessages,
+    ];
+
+    echo $OUTPUT->render_from_template(
+        'local_courseaiassistant/conversation_download',
+        $templatedata
+    );
     exit;
 }
 

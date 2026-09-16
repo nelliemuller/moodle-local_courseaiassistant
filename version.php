@@ -26,8 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_courseaiassistant';
-$plugin->version = 2026090100;
+$plugin->version = 2026091600;
 $plugin->requires = 2025041400;
 $plugin->supported = [500, 502];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '2.1.0';
+$plugin->maturity = MATURITY_RC;
+$plugin->release = '2.1.0-rc29';
